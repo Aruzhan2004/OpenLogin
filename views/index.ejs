@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <title>Weather App</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Weather Cities</h1>
+
+        <form id="weatherForm" action="/weather" method="GET">
+            <label for="city">Enter city:</label>
+            <input type="text" id="city" name="city" required>
+            <button type="submit">Get Weather</button>
+        </form>
+    </div>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <script src="/index.js"></script>
+    <script>
+        function getWeather() {
+            const city = document.getElementById("city").value;
+            const weatherResultDiv = document.getElementById("weatherResult");
+
+            fetch(`/weather?city=${city}`)
+                .then(response => response.text())
+                .then(html => {
+                    weatherResultDiv.innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Error fetching weather data:', error);
+                });
+        }
+    </script>
+</body>
+<%- include('footer.ejs', { yourName: 'Aruzhan', groupNumber: 'SE-2201' }) %>
+
+</html>
